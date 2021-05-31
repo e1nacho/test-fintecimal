@@ -25,21 +25,16 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
     private var locationEntityArrayList: ArrayList<LocationEntity>? = null
     var latitude = 0.0
     var longitude = 0.0
-    var streetName = "";
-    var suburb = "";
-    var visited = true;
+    var streetName = ""
+    var suburb = ""
+    var visited = true
+    var id=0
+    var locationCount=0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-
-
-
-
         layoutManager = LinearLayoutManager(this)
         recyclerView_locations.layoutManager = layoutManager
 
@@ -67,42 +62,29 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
 
         val db = Room.databaseBuilder(this,
                 AppDataBase::class.java, "fintecimalDB").allowMainThreadQueries().build()
-//        val locations = LocationEntity(streetName = "Av. de la Paz 2599", suburb = "Arcos Vallarta", visited = false, longitude = 20.6721825, latitude = -103.3844292)
-//        val reg: Long? = db.locationDao()?.insert(locations)
-//        Toast.makeText(getApplicationContext(), "reg", Toast.LENGTH_LONG).show();
-
-
-        val lista: List<LocationEntity> = db.locationDao()?.getAll() as List<LocationEntity>;
-
-
-        val locationList: ArrayList<LocationEntity> = ArrayList()
+        val locations = LocationEntity(streetName = "Av. de la Paz 2599", suburb = "Arcos Vallarta", visited = false, longitude = 20.6721825, latitude = -103.3844292)
+        val reg: Long? = db.locationDao()?.insert(locations)
 
 
 
+        val listLocation: List<LocationEntity> = db.locationDao()?.getAll() as List<LocationEntity>;
+        locationCount=listLocation.size
 
 
+        for (i in listLocation.indices) {
+            latitude = listLocation[i].latitude
+            longitude = listLocation[i].longitude
+            streetName = listLocation[i].streetName
+            suburb = listLocation[i].suburb
+            visited = listLocation[i].visited
+            id = listLocation[i].id
 
-
-
-
-
-        for (i in lista.indices) {
-            latitude = lista[i].latitude
-            longitude = lista[i].longitude
-            streetName = lista[i].streetName
-            suburb = lista[i].suburb
-            visited = lista[i].visited
-
-
-            locationList.add(0, LocationEntity(streetName = lista[i].streetName, suburb = lista[i].suburb, visited = lista[i].visited, latitude = lista[i].latitude, longitude = lista[i].longitude)).toString()
-
-
-            locationEntityArrayList = ArrayList(locationList)
-
+            locationEntityArrayList = ArrayList(listLocation)
+            locationAdapter = LocationAdapter(locationEntityArrayList!!, this)
+            recyclerView_locations.adapter = locationAdapter
 
         }
-        locationAdapter = LocationAdapter(locationEntityArrayList!!, this)
-        recyclerView_locations.adapter = locationAdapter
+
 
 
     }
@@ -117,6 +99,8 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
         bundle.putString("streetName", streetName)
         bundle.putString("suburb", suburb)
         bundle.putBoolean("visited", visited)
+        bundle.putInt("id", id)
+        bundle.putInt("locationCount", locationCount)
 
         val intent = Intent(this@MainActivity, MapsActivity::class.java)
         intent.putExtras(bundle)

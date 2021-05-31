@@ -3,6 +3,7 @@ package com.test_fintecimal
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 
 @Dao
@@ -18,4 +19,11 @@ interface LocationDao {
 
     @Insert
     fun insert(location: LocationEntity?): Long?
+
+
+    @Query("UPDATE locationentity SET visited=:visited WHERE id = :id")
+     fun update(visited: Boolean?, id: Int)
+
+
+
 }
