@@ -98,15 +98,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setMaxZoomPreference(14.0f);
         val bundle = intent.extras
 
-        val sydney = LatLng(bundle!!.getDouble("longitude"), bundle!!.getDouble("latitude"))
+        val locationMaps = LatLng(bundle!!.getDouble("longitude"), bundle!!.getDouble("latitude"))
         if (bundle!!.getBoolean("visited")) {
-            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_visited_marker))
+            mMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_visited_marker))
 
         }else{
-            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_marker))
+            mMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_marker))
 
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(locationMaps))
 
 
     }
