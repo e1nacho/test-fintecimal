@@ -3,9 +3,7 @@ package com.test_fintecimal
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlinx.android.synthetic.main.card_view_locations.textView_count
+import kotlinx.android.synthetic.main.card_view_locations.*
 
 
 class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
@@ -30,6 +28,7 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
     var visited = true
     var id = 0
     var locationCount = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
             val locations = LocationEntity(streetName = "Av. de la Paz 2599", suburb = "Arcos Vallarta", visited = false, longitude = 20.6721825, latitude = -103.3844292)
             val reg: Long? = db.locationDao()?.insert(locations)
         }
+
 
 
         val listLocation: ArrayList<LocationEntity> = db.locationDao()?.getAll() as ArrayList<LocationEntity>;
