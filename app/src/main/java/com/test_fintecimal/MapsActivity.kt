@@ -42,32 +42,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val bundle = intent.extras
 
 
-        val visited = findViewById<TextView>(R.id.maps_cardView_visited)
-        val indicator = findViewById<ImageView>(R.id.maps_cardView_indicator)
-        val streetName = findViewById<TextView>(R.id.maps_cardView_streetName)
-        val suburb = findViewById<TextView>(R.id.maps_cardView_suburb)
-        val buttonNavigation = findViewById<Button>(R.id.button_navigation)
-        val buttonCheck = findViewById<Button>(R.id.button_check)
-
-
         if (bundle!!.getBoolean("visited")) {
-            visited.text = "Visitado"
-            visited.setTextColor(Color.parseColor("#3ac2c2"))
-            indicator.setImageResource(R.drawable.circle_status_true);
-            buttonNavigation.visibility = View.GONE;
-            buttonCheck.visibility = View.GONE;
+            maps_cardView_visited.text = "Visitado"
+            maps_cardView_visited.setTextColor(Color.parseColor("#3ac2c2"))
+            maps_cardView_indicator.setImageResource(R.drawable.circle_status_true);
+            button_navigation.visibility = View.GONE;
+            button_check.visibility = View.GONE;
         } else {
-            visited.text = "Pendiente"
-            visited.setTextColor(Color.parseColor("#AAAAAA"))
-            indicator.setImageResource(R.drawable.circle_status_false);
-            buttonNavigation.visibility = View.VISIBLE;
-            buttonCheck.visibility = View.VISIBLE;
+            maps_cardView_visited.text = "Pendiente"
+            maps_cardView_visited.setTextColor(Color.parseColor("#AAAAAA"))
+            maps_cardView_indicator.setImageResource(R.drawable.circle_status_false);
+            button_navigation.visibility = View.VISIBLE;
+            button_check.visibility = View.VISIBLE;
         }
 
-        streetName.text = bundle.getString("streetName")
-        suburb.text = bundle.getString("suburb")
+        maps_cardView_streetName.text = bundle.getString("streetName")
+        maps_cardView_suburb.text = bundle.getString("suburb")
 
-//        val homeButton = findViewById<ImageView>(R.id.imageView_home)
+
         imageView_home.setOnClickListener { v: View ->
             val intent = Intent(v.context, MainActivity::class.java)
             v.context.startActivity(intent)
@@ -88,7 +80,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             finish();
         }
 
-        buttonNavigation.setOnClickListener { v: View ->
+        button_navigation.setOnClickListener { v: View ->
 
             val mapIntent: Intent = Uri.parse("geo:" + bundle.getDouble("longitude") + "," + bundle.getDouble("latitude") + "?z=14").let { location ->
 
