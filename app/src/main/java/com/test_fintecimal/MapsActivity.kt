@@ -79,7 +79,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         button_navigation.setOnClickListener { v: View ->
 
-            val mapIntent: Intent = Uri.parse("geo:" + bundle.getDouble("longitude") + "," + bundle.getDouble("latitude") + "?z=14").let { location ->
+            val mapIntent: Intent = Uri.parse("geo:" + bundle.getDouble("longitude").toString() + "," + bundle.getDouble("latitude").toString() + "?z=14").let { location ->
 
                 Intent(Intent.ACTION_VIEW, location)
             }
