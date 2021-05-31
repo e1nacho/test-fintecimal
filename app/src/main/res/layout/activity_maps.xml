@@ -33,7 +33,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_locations"
+        android:id="@+id/maps_cardView_locations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
