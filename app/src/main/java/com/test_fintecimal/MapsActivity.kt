@@ -100,10 +100,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val sydney = LatLng(bundle!!.getDouble("longitude"), bundle!!.getDouble("latitude"))
         if (bundle!!.getBoolean("visited")) {
-            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_visited_marker))
+            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_visited_marker))
 
         }else{
-            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_marker))
+            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_marker))
 
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
@@ -111,7 +111,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    fun Context.bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor {
+    fun Context.BitmapDescriptor(vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(this, vectorResId)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
