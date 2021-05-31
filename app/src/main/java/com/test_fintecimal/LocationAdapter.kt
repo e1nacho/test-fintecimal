@@ -36,6 +36,8 @@ Listener) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
 
         holder.bind(locationList[position], listener, colors, position)
 
+
+
     }
 
 
@@ -57,8 +59,6 @@ Listener) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
 
             val status = itemView.findViewById<TextView>(R.id.cardView_status)
             val indicator = itemView.findViewById<ImageView>(R.id.cardView_indicator)
-
-
 
             itemView.setOnClickListener{ listener.onItemClick(locationEntity) }
             itemView.setBackgroundColor(Color.parseColor(colors[position % 8]))

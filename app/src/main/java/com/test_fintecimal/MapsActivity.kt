@@ -7,12 +7,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.room.Room
@@ -25,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.app_bar_maps.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -68,8 +67,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         streetName.text = bundle.getString("streetName")
         suburb.text = bundle.getString("suburb")
 
-        val homeButton = findViewById<ImageView>(R.id.imageView_home)
-        homeButton.setOnClickListener { v: View ->
+//        val homeButton = findViewById<ImageView>(R.id.imageView_home)
+        imageView_home.setOnClickListener { v: View ->
             val intent = Intent(v.context, MainActivity::class.java)
             v.context.startActivity(intent)
             finish();
@@ -82,7 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val db = Room.databaseBuilder(this,
                     AppDataBase::class.java, "fintecimalDB").allowMainThreadQueries().build()
 
-            val reg: Unit? = db.locationDao()?.update(true,bundle.getInt("id"))
+            val reg: Unit? = db.locationDao()?.update(true, bundle.getInt("id"))
             val intent = Intent(this@MapsActivity, MainActivity::class.java)
             intent.putExtras(bundle)
             startActivity(intent)
@@ -91,7 +90,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         buttonNavigation.setOnClickListener { v: View ->
 
-            val mapIntent: Intent = Uri.parse("geo:"+bundle.getDouble("longitude")+","+bundle.getDouble("latitude")+"?z=14").let { location ->
+            val mapIntent: Intent = Uri.parse("geo:" + bundle.getDouble("longitude") + "," + bundle.getDouble("latitude") + "?z=14").let { location ->
 
                 Intent(Intent.ACTION_VIEW, location)
             }
@@ -105,14 +104,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
+
+        mMap.setMinZoomPreference(14.0f);
+        mMap.setMaxZoomPreference(14.0f);
         val bundle = intent.extras
 
         val sydney = LatLng(bundle!!.getDouble("longitude"), bundle!!.getDouble("latitude"))
         if (bundle!!.getBoolean("visited")) {
-            mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_visited_marker))
+            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_visited_marker))
 
         }else{
-            mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_marker))
+            mMap.addMarker(MarkerOptions().position(sydney).title("fintecimal")).setIcon(bitmapDescriptorFromVector(R.drawable.ic_marker))
 
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))

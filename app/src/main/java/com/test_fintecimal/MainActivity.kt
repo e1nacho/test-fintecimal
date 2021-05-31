@@ -16,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlinx.android.synthetic.main.card_view_locations.*
+import kotlinx.android.synthetic.main.card_view_locations.textView_count
 
 
 class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
@@ -28,9 +28,8 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
     var streetName = ""
     var suburb = ""
     var visited = true
-    var id=0
-    var locationCount=0
-
+    var id = 0
+    var locationCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,8 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
         layoutManager = LinearLayoutManager(this)
         recyclerView_locations.layoutManager = layoutManager
 
+        val db = Room.databaseBuilder(this,
+                AppDataBase::class.java, "fintecimalDB").allowMainThreadQueries().build()
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://fintecimal-test.herokuapp.com/api/interview/")
@@ -59,16 +60,26 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
             }
 
         })
+        val count: ArrayList<LocationEntity> = db.locationDao()?.getAll() as ArrayList<LocationEntity>;
+        locationCount = count.size
+        Log.e("", "" + locationCount.toString())
 
-        val db = Room.databaseBuilder(this,
-                AppDataBase::class.java, "fintecimalDB").allowMainThreadQueries().build()
-        val locations = LocationEntity(streetName = "Av. de la Paz 2599", suburb = "Arcos Vallarta", visited = false, longitude = 20.6721825, latitude = -103.3844292)
-        val reg: Long? = db.locationDao()?.insert(locations)
+        //Tuve problemas al obtener los datos de la url por lo cual lo ingreso manualmente un dato
+        // tambien el recyclerview no me muestra todos los datos solamente 1
+        //Falto realizar la busqueda
+
+        if (locationCount == 0) {
+
+            val locations = LocationEntity(streetName = "Av. de la Paz 2599", suburb = "Arcos Vallarta", visited = false, longitude = 20.6721825, latitude = -103.3844292)
+            val reg: Long? = db.locationDao()?.insert(locations)
+        }
 
 
+        val listLocation: ArrayList<LocationEntity> = db.locationDao()?.getAll() as ArrayList<LocationEntity>;
 
-        val listLocation: List<LocationEntity> = db.locationDao()?.getAll() as List<LocationEntity>;
-        locationCount=listLocation.size
+        locationEntityArrayList = ArrayList(listLocation)
+        locationAdapter = LocationAdapter(locationEntityArrayList!!, this)
+        recyclerView_locations.adapter = locationAdapter
 
 
         for (i in listLocation.indices) {
@@ -79,12 +90,8 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
             visited = listLocation[i].visited
             id = listLocation[i].id
 
-            locationEntityArrayList = ArrayList(listLocation)
-            locationAdapter = LocationAdapter(locationEntityArrayList!!, this)
-            recyclerView_locations.adapter = locationAdapter
 
         }
-
 
 
     }
