@@ -59,13 +59,15 @@ class MainActivity : AppCompatActivity(), LocationAdapter.Listener {
             }
 
         })
-        val count: ArrayList<LocationEntity> = db.locationDao()?.getAll() as ArrayList<LocationEntity>;
-        locationCount = count.size
-        
 
         //Tuve problemas al obtener los datos de la url por lo cual lo ingreso manualmente un dato
         // tambien el recyclerview no me muestra todos los datos solamente 1
         //Falto realizar la busqueda
+
+
+
+        val count: ArrayList<LocationEntity> = db.locationDao()?.getAll() as ArrayList<LocationEntity>;
+        locationCount = count.size
 
         if (locationCount == 0) {
 
