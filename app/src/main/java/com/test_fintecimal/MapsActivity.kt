@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.app_bar_maps.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var gMap: GoogleMap
 
 
 
@@ -92,21 +92,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        mMap = googleMap
+        gMap = googleMap
 
-        mMap.setMinZoomPreference(14.0f);
-        mMap.setMaxZoomPreference(14.0f);
+        gMap.setMinZoomPreference(14.0f);
+        gMap.setMaxZoomPreference(14.0f);
         val bundle = intent.extras
 
         val locationMaps = LatLng(bundle!!.getDouble("longitude"), bundle!!.getDouble("latitude"))
         if (bundle!!.getBoolean("visited")) {
-            mMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_visited_marker))
+            gMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_visited_marker))
 
         }else{
-            mMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_marker))
+            gMap.addMarker(MarkerOptions().position(locationMaps).title("fintecimal")).setIcon(BitmapDescriptor(R.drawable.ic_marker))
 
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(locationMaps))
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(locationMaps))
 
 
     }
