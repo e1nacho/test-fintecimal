@@ -111,8 +111,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    fun Context.BitmapDescriptor(vectorResId: Int): BitmapDescriptor {
-        val vectorDrawable = ContextCompat.getDrawable(this, vectorResId)
+    fun Context.BitmapDescriptor(idVector: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(this, idVector)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         vectorDrawable.draw(Canvas(bitmap))
