@@ -17,26 +17,11 @@ class LocationAdapter (private val locationList : ArrayList<LocationEntity>, pri
 Listener) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
     interface Listener {
         fun onItemClick(locationData : LocationEntity)
-
-
-
     }
-
-
-
-    private val colors : Array<String> = arrayOf("#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff" , "#ffffff" , "#ffffff")
-
-
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
-
-        holder.bind(locationList[position], listener, colors, position)
-
-
-
+        holder.bind(locationList[position], listener)
     }
 
 
@@ -54,13 +39,13 @@ Listener) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
 
 
 
-        fun bind(locationEntity: LocationEntity, listener: Listener, colors : Array<String>, position: Int) {
+        fun bind(locationEntity: LocationEntity, listener: Listener) {
 
             val status = itemView.findViewById<TextView>(R.id.cardView_status)
             val indicator = itemView.findViewById<ImageView>(R.id.cardView_indicator)
 
             itemView.setOnClickListener{ listener.onItemClick(locationEntity) }
-            itemView.setBackgroundColor(Color.parseColor(colors[position % 8]))
+
 
             if(locationEntity.visited){
                 itemView.cardView_status.text = "Visitado"
